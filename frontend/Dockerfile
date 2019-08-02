@@ -1,12 +1,14 @@
 #Basic Docker Image program
-FROM centos:7
+
+
+FROM ubuntu:18.04
 MAINTAINER poornimaa2017@gmail.com
-RUN yum -y update
-RUN yum -y install httpd
-RUN mkdir /apps
-WORKDIR /apps
-#Extracts zip and copies the file, add will get files from url as well
+RUN apt-get -y update
+RUN apt-get -y install tzdata
+ENV TZ=Asia/Kolkota
+RUN apt-get -y install nginx php php-gd php-mysql
+
 ADD code /var/www/html
-ENV BACKENDLB=test
 EXPOSE 80
-CMD ["apachectl","-D","FOREGROUND"]
+CMD ["nginx","-g","daemon off;"]
+
